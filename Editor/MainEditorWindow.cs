@@ -224,6 +224,30 @@ namespace dVRC.Editor
                 GUILayout.Label("Downloading AssetRipper...", EditorStyles.miniBoldLabel);
             GUILayout.Label(_ripperHandler.WorkingDirectory, EditorStyles.miniLabel);
         }
+        
+        private void DrawAssetRipperManagement()
+        {
+            GUILayout.Label("AssetRipper is present!");
+            if (!isDownloading)
+            {
+                if (GUILayout.Button("Reinstall AssetRipper"))
+                {
+                    if (!isDownloading)
+                    {
+                        Directory.Delete(_ripperHandler.WorkingDirectory, true);
+                        isDownloading = true;
+                        _ripperHandler.Download(() =>
+                        {
+                            isDownloading = false;
+                            EditorUtility.DisplayDialog("dVRC", "Downloaded AssetRipper!", "OK");
+                        });
+                    }
+                }
+            }
+            else
+                GUILayout.Label("Downloading AssetRipper...", EditorStyles.miniBoldLabel);
+            GUILayout.Label(_ripperHandler.WorkingDirectory, EditorStyles.miniLabel);
+        }
 
         public void OnGUI()
         {
@@ -272,6 +296,8 @@ namespace dVRC.Editor
                     DrawManageAssetBundles();
                     if(!_ripperHandler.isPresent)
                         DrawRequestDownloadAssetRipper();
+                    else
+                        DrawAssetRipperManagement();
                 }
             }
 #else
