@@ -85,7 +85,7 @@ namespace dVRC
             process.StartInfo = new ProcessStartInfo
             {
                 WorkingDirectory = WorkingDirectory,
-                Arguments = $"--port {SPECIFIC_PORT} --launch-browser=false",
+                Arguments = $"--port {SPECIFIC_PORT} --headless",
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardInput = true,
