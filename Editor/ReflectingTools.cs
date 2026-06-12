@@ -9,6 +9,8 @@ namespace dVRC.Editor
 {
     public class ReflectingTools
     {
+        private static Dictionary<string, VRCAsset> cachedAssets = new();
+        
         private static ApiWorld GetApiWorldFromCache(string id)
         {
             List<ApiWorld> apiWorlds = (List<ApiWorld>) Convert.ChangeType(
@@ -33,15 +35,18 @@ namespace dVRC.Editor
 
         public static VRCAsset GetDynamicAsset(string id, VRCAssetType assetType)
         {
+            if (cachedAssets.TryGetValue(id, out VRCAsset asset)) return asset;
             switch (assetType)
             {
                 case VRCAssetType.Avatar:
                     ApiAvatar avatar = GetApiAvatarFromCache(id);
                     VRCAsset vrcAsseta = new VRCAsset(avatar);
+                    cachedAssets.Add(id, vrcAsseta);
                     return vrcAsseta;
                 case VRCAssetType.World:
                     ApiWorld world = GetApiWorldFromCache(id);
                     VRCAsset vrcAssetw = new VRCAsset(world);
+                    cachedAssets.Add(id, vrcAssetw);
                     return vrcAssetw;
             }
             return null;

@@ -80,7 +80,7 @@ namespace dVRC.Editor
                 SelectedTools.SelectedAssetType = VRCAssetType.Unknown;
             }
         }
-
+        
         private void ShowAssetScreen(string id)
         {
             if (!VRCSdkControlPanel.ImageCache.ContainsKey(id))
@@ -93,15 +93,18 @@ namespace dVRC.Editor
             GUILayout.Label("Selected Asset", EditorStyles.centeredGreyMiniLabel);
             GUILayout.Box(vrcAsset.Texture, EditorStyles.centeredGreyMiniLabel);
             GUILayout.Label(vrcAsset.ToString(), EditorStyles.centeredGreyMiniLabel);
-            if (GUILayout.Button("Download Asset"))
+            foreach (BuildPlatforms selectedPlatform in vrcAsset.SupportedPlatforms)
             {
-                vrcAsset.DownloadAsset(OutputAssetBundles, null, () =>
+                if (GUILayout.Button($"Download {selectedPlatform.ToString()} Asset"))
                 {
-                    SelectedTools.SelectedAvatarId = String.Empty;
-                    SelectedTools.SelectedWorldId = String.Empty;
-                    SelectedTools.SelectedAssetType = VRCAssetType.Unknown;
-                    EditorUtility.DisplayDialog("dVRC", "Finished Downloading " + vrcAsset.Name, "OK");
-                });
+                    vrcAsset.DownloadAsset(OutputAssetBundles, selectedPlatform, null, () =>
+                    {
+                        SelectedTools.SelectedAvatarId = String.Empty;
+                        SelectedTools.SelectedWorldId = String.Empty;
+                        SelectedTools.SelectedAssetType = VRCAssetType.Unknown;
+                        EditorUtility.DisplayDialog("dVRC", "Finished Downloading " + vrcAsset.Name, "OK");
+                    });
+                }
             }
             if (GUILayout.Button("Return", EditorStyles.miniButtonRight))
             {
