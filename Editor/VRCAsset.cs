@@ -79,7 +79,7 @@ namespace dVRC.Editor
                 SupportedPlatforms = supportedPlatforms.ToArray();
             }, container =>
             {
-                Debug.LogError("uh oh check");
+                Debug.LogError("获取世界平台信息失败，请检查 VRCSDK 状态。");
             });
         }
         
@@ -147,8 +147,8 @@ namespace dVRC.Editor
                         download2(AssetURL, outputFile, percentage, onDone);
                     else
                         Debug.LogError(
-                            $"Could not find World build for platform {platform.GetPlatformString()}! Does it exist?");
-                }, container => { Debug.LogError("uh oh"); });
+                            $"未找到平台 {platform.GetPlatformString()} 对应的世界构建，请确认该构建存在。");
+                }, container => { Debug.LogError("获取世界下载信息失败。"); });
             }
             else if(_avatar != null)
             {

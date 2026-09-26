@@ -28,7 +28,7 @@ namespace dVRC
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     baseURL += "linux_";
                 else
-                    throw new Exception("Unknown OSPlatform");
+                    throw new Exception("不支持的操作系统平台");
                 if (RuntimeInformation.ProcessArchitecture == Architecture.X86 ||
                     RuntimeInformation.ProcessArchitecture == Architecture.X64)
                     baseURL += "x64";
@@ -49,7 +49,7 @@ namespace dVRC
                     return "AssetRipper.GUI.Free";
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     return "AssetRipper.GUI.Free";
-                throw new Exception("Unknown OSPlatform");
+                throw new Exception("不支持的操作系统平台");
             }
         }
     
